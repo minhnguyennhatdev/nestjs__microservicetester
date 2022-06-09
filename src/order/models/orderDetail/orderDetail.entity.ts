@@ -18,6 +18,9 @@ export class OrderDetailEntity {
   @Column()
   author: string;
 
+  @Column()
+  bookid: number;
+
   @ManyToOne(() => OrderEntity, (order) => order.orderDetails)
   order: OrderEntity;
 }

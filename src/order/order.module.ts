@@ -1,11 +1,16 @@
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ClientsModule, Transport, ClientProxy } from '@nestjs/microservices';
 import { OrderDetailEntity } from './models/orderDetail/orderDetail.entity';
 import { OrderEntity } from './models/order/order.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrderService } from './order.service';
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { OrderController } from './order.controller';
 import { OrderRepository } from './order.repository';
+import {
+  addCircuitBreakerSupportTo,
+  CustomConfig,
+  CustomLogger,
+} from 'src/circuit-breaker';
 
 @Module({
   imports: [
@@ -27,6 +32,6 @@ import { OrderRepository } from './order.repository';
     ]),
   ],
   controllers: [OrderController],
-  providers: [OrderService, OrderRepository],
+  providers: [OrderRepository, OrderService],
 })
 export class OrderModule {}

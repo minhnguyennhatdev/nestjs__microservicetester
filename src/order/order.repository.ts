@@ -26,4 +26,11 @@ export class OrderRepository {
   async createOrder(data: Partial<Order>): Promise<Order> {
     return this.order.save(data);
   }
+
+  async getBestSeller(): Promise<any> {
+    const bestseller = await this.orderDetail.query(
+      'SELECT bookId, COUNT(bookId) as bestseller FROM order_detail GROUP BY bookId ORDER BY bestseller DESC LIMIT 3',
+    );
+    return bestseller;
+  }
 }

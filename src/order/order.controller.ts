@@ -1,8 +1,9 @@
-import { GetBooksByIdsResponse } from './models/dto/microserviceresponse/get-books-by-ids-response';
+import { ExceptionFilter } from './../decorators/rpc-exception.filter';
+import { ResponseHandler } from './../types/response/responsehandler.type';
 import { OrderService } from './order.service';
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { CreateOrderRequest } from './models/dto/create-order-request';
-import { firstValueFrom, Observable } from 'rxjs';
+import { Body, Controller, Get, Post, UseFilters } from '@nestjs/common';
+import { CreateOrderRequest } from './models/dto/request/create-order-request';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Controller('order')
 export class OrderController {
@@ -15,15 +16,13 @@ export class OrderController {
 
   @Post()
   async createOrder(@Body() createOrderRequest: CreateOrderRequest) {
-    const result: Observable<GetBooksByIdsResponse> =
-      await this.orderService.getBooksByIds_Microservice(
-        createOrderRequest.ids,
-      );
-    const detail = await firstValueFrom(result);
+    return this.orderService.createOrder(createOrderRequest);
+  }
 
-    return this.orderService.createOrder({
-      ...createOrderRequest,
-      orderDetails: detail.data,
-    });
+  @Get('/getbestseller')
+  @UseFilters(new ExceptionFilter())
+  @MessagePattern({ cmd: 'get_best_seller' })
+  async getBestSeller() {
+    return this.orderService.getBestSeller();
   }
 }

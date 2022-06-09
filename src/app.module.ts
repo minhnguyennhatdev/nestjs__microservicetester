@@ -1,10 +1,7 @@
-import { OrderRepository } from './order/order.repository';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { OrderController } from './order/order.controller';
-import { OrderService } from './order/order.service';
 import { OrderModule } from './order/order.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';

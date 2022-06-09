@@ -8,4 +8,6 @@ export class OrderDetail {
   author: string;
 
   order: Order;
+
+  bookid: number;
 }

@@ -3,12 +3,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinTable,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity('order')
 export class OrderEntity {
   @PrimaryGeneratedColumn()
   id: number;
