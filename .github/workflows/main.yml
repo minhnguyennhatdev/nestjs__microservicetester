@@ -1,0 +1,17 @@
+name: CI
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    - name: Setting up Nodes
+      uses: actions/setup-node@v3
+    - name: Install dependencies
+      run: npm install
+    - name: Run tests
+      run: CI=true npm test
